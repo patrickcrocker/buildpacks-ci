@@ -16,9 +16,9 @@ cf auth $CF_USERNAME $CF_PASSWORD
 
 cf target -o system -s system
 
+# Figure out the name of the buildpack in CF based on the filename
 filename=$(basename buildpacks/*.zip)
 filename_base=${filename%-v[0-9]*}
-
 buildpack_name=$(cf buildpacks | grep $filename_base | cut -d " " -f 1)
 
 cf update-buildpack $buildpack_name --unlock

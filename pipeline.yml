@@ -1,13 +1,129 @@
 ---
+cf-params: &cf-params
+  CF_API_URL: {{cf-api-url}}
+  CF_SKIP_SSL: {{cf-skip-ssl}}
+  CF_USERNAME: {{cf-username}}
+  CF_PASSWORD: {{cf-password}}
+  CF_ORG: {{cf-org}}
+  CF_SPACE: {{cf-space}}
+
 jobs:
 - name: java
   plan:
   - get: buildpacks-ci
   - get: buildpacks
+    resource: java-buildpack
+    trigger: true
     params:
       globs: [ "*java-buildpack-offline*" ]
   - task: update-buildpack
     file: buildpacks-ci/update-buildpack.yml
+    params:
+      <<: *cf-params
+
+- name: ruby
+  plan:
+  - get: buildpacks-ci
+  - get: buildpacks
+    resource: ruby-buildpack
+    trigger: true
+    params:
+      globs: [ "*ruby_buildpack-cached*" ]
+  - task: update-buildpack
+    file: buildpacks-ci/update-buildpack.yml
+    params:
+      <<: *cf-params
+
+- name: ruby
+  plan:
+  - get: buildpacks-ci
+  - get: buildpacks
+    resource: ruby-buildpack
+    trigger: true
+    params:
+      globs: [ "*ruby_buildpack-cached*" ]
+  - task: update-buildpack
+    file: buildpacks-ci/update-buildpack.yml
+    params:
+      <<: *cf-params
+
+- name: nodejs
+  plan:
+  - get: buildpacks-ci
+  - get: buildpacks
+    resource: nodejs-buildpack
+    trigger: true
+    params:
+      globs: [ "*nodejs_buildpack-cached*" ]
+  - task: update-buildpack
+    file: buildpacks-ci/update-buildpack.yml
+    params:
+      <<: *cf-params
+
+- name: go
+  plan:
+  - get: buildpacks-ci
+  - get: buildpacks
+    resource: go-buildpack
+    trigger: true
+    params:
+      globs: [ "*go_buildpack-cached*" ]
+  - task: update-buildpack
+    file: buildpacks-ci/update-buildpack.yml
+    params:
+      <<: *cf-params
+
+- name: python
+  plan:
+  - get: buildpacks-ci
+  - get: buildpacks
+    resource: python-buildpack
+    trigger: true
+    params:
+      globs: [ "*python_buildpack-cached*" ]
+  - task: update-buildpack
+    file: buildpacks-ci/update-buildpack.yml
+    params:
+      <<: *cf-params
+
+- name: php
+  plan:
+  - get: buildpacks-ci
+  - get: buildpacks
+    resource: php-buildpack
+    trigger: true
+    params:
+      globs: [ "*php_buildpack-cached*" ]
+  - task: update-buildpack
+    file: buildpacks-ci/update-buildpack.yml
+    params:
+      <<: *cf-params
+
+- name: staticfile
+  plan:
+  - get: buildpacks-ci
+  - get: buildpacks
+    resource: staticfile-buildpack
+    trigger: true
+    params:
+      globs: [ "*staticfile_buildpack-cached*" ]
+  - task: update-buildpack
+    file: buildpacks-ci/update-buildpack.yml
+    params:
+      <<: *cf-params
+
+- name: binary
+  plan:
+  - get: buildpacks-ci
+  - get: buildpacks
+    resource: binary-buildpack
+    trigger: true
+    params:
+      globs: [ "*binary_buildpack-cached*" ]
+  - task: update-buildpack
+    file: buildpacks-ci/update-buildpack.yml
+    params:
+      <<: *cf-params
 
 resources:
 - name: buildpacks-ci
@@ -16,11 +132,61 @@ resources:
     uri: {{git-uri}}
     branch: {{git-branch}}
 
-- name: buildpacks
+- name: java-buildpack
   type: pivnet
   source:
     api_token: {{pivnet-api-token}}
     product_slug: buildpacks
+    product_version: Java Buildpack
+
+- name: ruby-buildpack
+  type: pivnet
+  source:
+    api_token: {{pivnet-api-token}}
+    product_slug: buildpacks
+    product_version: Ruby
+
+- name: nodejs-buildpack
+  type: pivnet
+  source:
+    api_token: {{pivnet-api-token}}
+    product_slug: buildpacks
+    product_version: nodejs
+
+- name: go-buildpack
+  type: pivnet
+  source:
+    api_token: {{pivnet-api-token}}
+    product_slug: buildpacks
+    product_version: go
+
+- name: python-buildpack
+  type: pivnet
+  source:
+    api_token: {{pivnet-api-token}}
+    product_slug: buildpacks
+    product_version: python
+
+- name: php-buildpack
+  type: pivnet
+  source:
+    api_token: {{pivnet-api-token}}
+    product_slug: buildpacks
+    product_version: php
+
+- name: staticfile-buildpack
+  type: pivnet
+  source:
+    api_token: {{pivnet-api-token}}
+    product_slug: buildpacks
+    product_version: staticfile
+
+- name: binary-buildpack
+  type: pivnet
+  source:
+    api_token: {{pivnet-api-token}}
+    product_slug: buildpacks
+    product_version: binary
 
 resource_types:
 - name: pivnet
