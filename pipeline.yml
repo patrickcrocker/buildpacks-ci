@@ -138,42 +138,42 @@ resources:
   source:
     api_token: {{pivnet-api-token}}
     product_slug: buildpacks
-    product_version: nodejs
+    product_version: NodeJS
 
 - name: go-buildpack
   type: pivnet
   source:
     api_token: {{pivnet-api-token}}
     product_slug: buildpacks
-    product_version: go
+    product_version: Go
 
 - name: python-buildpack
   type: pivnet
   source:
     api_token: {{pivnet-api-token}}
     product_slug: buildpacks
-    product_version: python
+    product_version: Python
 
 - name: php-buildpack
   type: pivnet
   source:
     api_token: {{pivnet-api-token}}
     product_slug: buildpacks
-    product_version: php
+    product_version: PHP
 
 - name: staticfile-buildpack
   type: pivnet
   source:
     api_token: {{pivnet-api-token}}
     product_slug: buildpacks
-    product_version: staticfile
+    product_version: Staticfile
 
 - name: binary-buildpack
   type: pivnet
   source:
     api_token: {{pivnet-api-token}}
     product_slug: buildpacks
-    product_version: binary
+    product_version: Binary
 
 resource_types:
 - name: pivnet
