@@ -21,8 +21,8 @@ filename_base=${filename%-v[0-9]*}
 
 buildpack_name=$(cf buildpacks | grep $filename_base | cut -d " " -f 1)
 
-cf update-buildpack $buildpack --unlock
+cf update-buildpack $buildpack_name --unlock
 
-cf update-buildpack $buildpack -p buildpacks/$filename
+cf update-buildpack $buildpack_name -p buildpacks/$filename
 
-cf update-buildpack $buildpack --lock
+cf update-buildpack $buildpack_name --lock
