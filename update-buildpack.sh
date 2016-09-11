@@ -2,7 +2,7 @@
 #
 # All CF_* variables are provided externally from this script
 
-set -e
+set -e -x
 
 if [ "true" = "$CF_SKIP_SSL" ]; then
   cf api $CF_API_URL --skip-ssl-validation
@@ -13,6 +13,8 @@ fi
 # Login to CF
 
 cf auth $CF_USERNAME $CF_PASSWORD
+
+cf target -o system -s system
 
 filename=$(basename buildpacks/*.zip)
 filename_base=${filename%-v[0-9]*}
