@@ -1,0 +1,30 @@
+---
+jobs:
+- name: java
+  plan:
+  - get: buildpacks-ci
+  - get: buildpacks
+    params:
+      globs: [ "*java-buildpack-offline*" ]
+  - task: update-buildpack
+    file: buildpacks-ci/update-buildpack.yml
+
+resources:
+- name: buildpacks-ci
+  type: git
+  source:
+    uri: {{git-uri}}
+    branch: {{git-branch}}
+
+- name: buildpacks
+  type: pivnet
+  source:
+    api_token: {{pivnet-api-token}}
+    product_slug: buildpacks
+
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
