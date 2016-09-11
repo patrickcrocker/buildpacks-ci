@@ -34,19 +34,6 @@ jobs:
     params:
       <<: *cf-params
 
-- name: ruby
-  plan:
-  - get: buildpacks-ci
-  - get: buildpacks
-    resource: ruby-buildpack
-    trigger: true
-    params:
-      globs: [ "*ruby_buildpack-cached*" ]
-  - task: update-buildpack
-    file: buildpacks-ci/update-buildpack.yml
-    params:
-      <<: *cf-params
-
 - name: nodejs
   plan:
   - get: buildpacks-ci
